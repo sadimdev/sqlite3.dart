@@ -57,11 +57,13 @@ macro(base_sqlite3_target name debug crypto)
       "-DSQLITE_OMIT_AUTOINIT"
       "-DHAVE_CIPHER_AES_128_CBC=0"
       "-DHAVE_CIPHER_AES_256_CBC=0"
-      "-DHAVE_CIPHER_SQLCIPHER=0"
+      "-DHAVE_CIPHER_SQLCIPHER=1"
       "-DHAVE_CIPHER_RC4=0"
       "-DHAVE_CIPHER_ASCON128=0"
       "-DHAVE_CIPHER_AEGIS=0"
-      "-DHAVE_CIPHER_CHACHA20=1"
+      "-DHAVE_CIPHER_CHACHA20=0"
+      "-DSQLITE_ENABLE_DBSTAT_VTAB"
+      "-DSQLITE_ENABLE_EXPLAIN_COMMENTS"
     )
   else()
     list(APPEND sources "${sqlite3_SOURCE_DIR}/sqlite3.c")
