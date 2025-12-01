@@ -90,7 +90,7 @@ jobs:
       - uses: actions/cache@v4
         id: cache_build
         with:
-          path: sqlite3/assets/out/
+          path: sqlite3/assets/.dart_tool/sqlite_build/out/
           key: sqlite-prebuilt-wasm-${{ hashFiles('sqlite3/assets/src/**') }}
 
       # clang 18 that ships on ubuntu crashes when compiling the wasm sources
@@ -128,7 +128,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sqlite3-libs-wasm
-          path: sqlite3/assets/out/
+          path: sqlite3/assets/.dart_tool/sqlite_build/out/
           if-no-files-found: error
           retention-days: 1
 
