@@ -90,7 +90,7 @@ jobs:
       - uses: actions/cache@v4
         id: cache_build
         with:
-          path: sqlite3/assets/.dart_tool/sqlite_build/out/
+          path: sqlite3/assets/out/
           key: sqlite-prebuilt-wasm-${{ hashFiles('sqlite3/assets/src/**') }}
 
       # clang 18 that ships on ubuntu crashes when compiling the wasm sources
@@ -121,14 +121,16 @@ jobs:
         if: steps.cache_build.outputs.cache-hit != 'true'
         working-directory: sqlite3/assets/
         run: |
-          cmake -Dwasi_sysroot=/opt/wasi-sdk/share/wasi-sysroot/ -S wasm -B .dart_tool/sqlite_build
+          cmake -Dwasi_sysroot=/opt/wasi-sdk/share/wasi-sysroot/ \
+                -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=$(pwd)/out \
+                -S wasm -B .dart_tool/sqlite_build
           cmake --build .dart_tool/sqlite_build/ -t output -j
 
       - name: Upload sqlite3 binaries
         uses: actions/upload-artifact@v4
         with:
           name: sqlite3-libs-wasm
-          path: sqlite3/assets/.dart_tool/sqlite_build/out/
+          path: sqsqlite3/assets/out/
           if-no-files-found: error
           retention-days: 1
 
